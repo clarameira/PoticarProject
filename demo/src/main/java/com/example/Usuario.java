@@ -46,7 +46,7 @@ public class Usuario {
         System.out.println("Endereco: " + Endereco);
         System.out.println("Numero: " + Numero);
         System.out.println("Bairro: " + Bairro);
-        System.out.println("Nome: " + Bairro);
+        System.out.println("Telefone: " + Telefone);
     }
 
     public void listarUsu(List<Usuario> listausuarios){
