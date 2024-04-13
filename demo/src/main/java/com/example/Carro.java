@@ -35,6 +35,62 @@ public class Carro {
         System.out.println("Disponível: " + (disponivel ? "Sim" : "Não"));
     }
 
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public int getNumPortas() {
+        return numPortas;
+    }
+
+    public void setNumPortas(int numPortas) {
+        this.numPortas = numPortas;
+    }
+
+    public int getQuilometragem() {
+        return quilometragem;
+    }
+
+    public void setQuilometragem(int quilometragem) {
+        this.quilometragem = quilometragem;
+    }
+
+    public String getChassi() {
+        return chassi;
+    }
+
+    public void setChassi(String chassi) {
+        this.chassi = chassi;
+    }
+
+    public double getValorLoc() {
+        return valorLoc;
+    }
+
+    public void setValorLoc(double valorLoc) {
+        this.valorLoc = valorLoc;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
     public void cadastrarCar(List<Carro> listaCarros, Carro novoCarro) {
         listaCarros.add(novoCarro);
         System.out.println("Carro cadastrado com sucesso!");
