@@ -1,7 +1,9 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 public class Carro {
     
     private String placa;
@@ -91,33 +93,86 @@ public class Carro {
         this.modelo = modelo;
     }
 
-    public void cadastrarCar(List<Carro> listaCarros, Carro novoCarro) {
-        listaCarros.add(novoCarro);
+    public static void cadastrarCar(Scanner sc, List<Carro> carros) {
+        System.out.println(" Cadastro de Carro ");
+        System.out.print("Placa: ");
+        String placa = sc.next();
+        System.out.print("Cor: ");
+        String cor = sc.next();
+        System.out.print("Número de Portas: ");
+        int numPortas = sc.nextInt();
+        System.out.print("Quilometragem: ");
+        int quilometragem = sc.nextInt();
+        System.out.print("Chassi: ");
+        String chassi = sc.next();
+        System.out.print("Valor de Locação: ");
+        double valorLoc = sc.nextDouble();
+        System.out.print("Modelo: ");
+        String modelo = sc.next();
+
+        Carro novoCarro = new Carro(placa, cor, numPortas, quilometragem, chassi, valorLoc, modelo);
+        carros.add(novoCarro);
         System.out.println("Carro cadastrado com sucesso!");
     }
 
-    public void editarCar(Carro carro, String novaPlaca, String novaCor, int novoNumPortas, int novaQuilometragem, String novoChassi, double novoValorLoc, String novoModelo) {
-        carro.placa = novaPlaca;
-        carro.cor = novaCor;
-        carro.numPortas = novoNumPortas;
-        carro.quilometragem = novaQuilometragem;
-        carro.chassi = novoChassi;
-        carro.valorLoc = novoValorLoc;
-        carro.modelo = novoModelo;
-        System.out.println("Informações do carro atualizadas com sucesso!");
+    public static void editarCar(Scanner sc, List<Carro> carros) {
+        System.out.println(" Edição de Carro ");
+        System.out.print("Digite a placa do carro que deseja editar: ");
+        String placa = sc.next();
+
+        for (Carro carro : carros) {
+            if (carro.getPlaca().equals(placa)) {
+                System.out.println("Digite os novos dados do carro:");
+                System.out.print("Cor: ");
+                carro.setCor(sc.next());
+                System.out.print("Número de Portas: ");
+                carro.setNumPortas(sc.nextInt());
+                System.out.print("Quilometragem: ");
+                carro.setQuilometragem(sc.nextInt());
+                System.out.print("Chassi: ");
+                carro.setChassi(sc.next());
+                System.out.print("Valor de Locação: ");
+                carro.setValorLoc(sc.nextDouble());
+                System.out.print("Modelo: ");
+                carro.setModelo(sc.next());
+                System.out.println("Carro editado com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Carro não encontrado.");
     }
 
-    public void removerCar(List<Carro> listaCarros, Carro carro) {
-        listaCarros.remove(carro);
-        System.out.println("Carro removido com sucesso!");
+    public static void removerCar(Scanner sc, List<Carro> carros) {
+        System.out.println(" Remoção de Carro ");
+        System.out.print("Digite a placa do carro que deseja remover: ");
+        String placa = sc.next();
+
+        Iterator<Carro> iterator = carros.iterator();
+        while (iterator.hasNext()) {
+            Carro carro = iterator.next();
+            if (carro.getPlaca().equals(placa)) {
+                iterator.remove();
+                System.out.println("Carro removido com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Carro não encontrado.");
     }
 
-    public void listarCar(List<Carro> listaCarros) {
-        if (listaCarros.isEmpty()) {
+    public static void listarCar(List<Carro> carros) {
+        System.out.println(" Lista de Carros ");
+        if (carros.isEmpty()) {
             System.out.println("Não há carros cadastrados.");
         } else {
-            for (Carro carro : listaCarros) {
-                carro.visuCar();
+            for (Carro carro : carros) {
+                System.out.println("Placa: " + carro.getPlaca());
+                System.out.println("Cor: " + carro.getCor());
+                System.out.println("Número de Portas: " + carro.getNumPortas());
+                System.out.println("Quilometragem: " + carro.getQuilometragem());
+                System.out.println("Chassi: " + carro.getChassi());
+                System.out.println("Valor de Locação: " + carro.getValorLoc());
+                System.out.println("Modelo: " + carro.getModelo());
+                System.out.println("Disponível: " + (carro.isDisponivel() ? "Sim" : "Não"));
                 System.out.println("------------------------");
             }
         }

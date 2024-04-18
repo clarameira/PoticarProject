@@ -1,6 +1,8 @@
 package com.example;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Usuario {
     private String nome;
@@ -68,24 +70,66 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public void cadastrarUsu(List<Usuario> listausuarios, Usuario novoUsuario){
-        listausuarios.add(novoUsuario);
-        System.out.println("Cadastrado com sucesso!");
+    public static void cadastrarUsu(Scanner sc, List<Usuario> usuarios) {
+        System.out.println(" Cadastro de Usuário ");
+        System.out.print("Nome: ");
+        String nome = sc.next();
+        System.out.print("CPF: ");
+        int cpf = sc.nextInt();
+        System.out.print("Endereço: ");
+        String endereco = sc.next();
+        System.out.print("Número: ");
+        int numero = sc.nextInt();
+        System.out.print("Bairro: ");
+        String bairro = sc.next();
+        System.out.print("Telefone: ");
+        String telefone = sc.next();
+
+        Usuario novoUsuario = new Usuario(nome, cpf, endereco, numero, bairro, telefone);
+        usuarios.add(novoUsuario);
+        System.out.println("Usuário cadastrado com sucesso!");
     }
 
-    public void removerUsu(List<Usuario> listausuarios, Usuario removerUsuario){
-        listausuarios.remove(removerUsuario);
-        System.out.println("Removido com sucesso!");
+    public static void removerUsu(Scanner sc, List<Usuario> usuarios) {
+        System.out.println(" Remoção de Usuário ");
+        System.out.print("Digite o CPF do usuário que deseja remover: ");
+        int cpf = sc.nextInt();
+
+        Iterator<Usuario> iterator = usuarios.iterator();
+        while (iterator.hasNext()) {
+            Usuario usuario = iterator.next();
+            if (usuario.getCPF() == cpf) {
+                iterator.remove();
+                System.out.println("Usuário removido com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Usuário não encontrado.");
     }
 
-    public void editarUsu(String novonome, int novocpf, String novoendereco, int novonumero, String novobairro, String novotelefone){
-        this.nome = novonome;
-        this.CPF = novocpf;
-        this.endereco = novoendereco;
-        this.Numero = novonumero;
-        this.bairro = novobairro;
-        this.telefone = novotelefone;
-        System.out.println("Informacoes atualizadas");
+    public static void editarUsu(Scanner sc, List<Usuario> usuarios) {
+        System.out.println(" Edição de Usuário ");
+        System.out.print("Digite o CPF do usuário que deseja editar: ");
+        int cpf = sc.nextInt();
+
+        for (Usuario usuario : usuarios) {
+            if (usuario.getCPF() == cpf) {
+                System.out.println("Digite os novos dados do usuário:");
+                System.out.print("Nome: ");
+                usuario.setNome(sc.next());
+                System.out.print("Endereço: ");
+                usuario.setEndereco(sc.next());
+                System.out.print("Número: ");
+                usuario.setNumero(sc.nextInt());
+                System.out.print("Bairro: ");
+                usuario.setBairro(sc.next());
+                System.out.print("Telefone: ");
+                usuario.setTelefone(sc.next());
+                System.out.println("Usuário editado com sucesso!");
+                return;
+            }
+        }
+        System.out.println("Usuário não encontrado.");
     }
 
     public void visuUsu(){
@@ -97,11 +141,21 @@ public class Usuario {
         System.out.println("Telefone: " + telefone);
     }
 
-    public void listarUsu(List<Usuario> listausuarios){
-        for(Usuario Usuario: listausuarios){
-            Usuario.visuUsu();
-            System.out.println("Listados");
-        }       
+    public static void listarUsu(List<Usuario> usuarios) {
+        System.out.println(" Lista de Usuários ");
+        if (usuarios.isEmpty()) {
+            System.out.println("Não há usuários cadastrados.");
+        } else {
+            for (Usuario usuario : usuarios) {
+                System.out.println("Nome: " + usuario.getNome());
+                System.out.println("CPF: " + usuario.getCPF());
+                System.out.println("Endereço: " + usuario.getEndereco());
+                System.out.println("Número: " + usuario.getNumero());
+                System.out.println("Bairro: " + usuario.getBairro());
+                System.out.println("Telefone: " + usuario.getTelefone());
+                System.out.println("------------------------");
+            }
+        }
     }
 }
 
