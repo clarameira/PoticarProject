@@ -352,3 +352,346 @@ public void editarLocacao(int cpfDono, int idLocacao, boolean novoDevolvido, boo
 Path caminhoArquivo = Paths.get("dados.json");
 
 Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+public void removerLocacao(int cpfLocador, int idLocacao) throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    List<Map<String, Object>> listaClientesMap = (List<Map<String, Object>>) dadosMap.get("clientes");
+
+    boolean clienteEncontrado = false;
+
+    for (Map<String, Object> clienteMap : listaClientesMap) {
+        if (clienteMap.containsKey("cpf")) {
+            int cpfCliente = (int) clienteMap.get("cpf");
+
+            if (cpfCliente == cpfLocador) {
+                clienteEncontrado = true;
+
+                List<Map<String, Object>> locacoesMap = (List<Map<String, Object>>) clienteMap.get("locacoes");
+
+                boolean locacaoRemovida = false;
+                for (int i = 0; i < locacoesMap.size(); i++) {
+                    Map<String, Object> locacaoMap = locacoesMap.get(i);
+
+                    if (locacaoMap.containsKey("idLocacao")) {
+                        int idAtualLocacao = (int) locacaoMap.get("idLocacao");
+
+                        if (idAtualLocacao == idLocacao) {
+                            locacoesMap.remove(i);
+                            locacaoRemovida = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (locacaoRemovida) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String jsonAtualizado = objectMapper.writeValueAsString(dadosMap);
+                    Files.writeString(caminhoArquivo, jsonAtualizado);
+
+                    System.out.println("Locação com ID " + idLocacao + " removida com sucesso.");
+                } else {
+                    System.out.println("Locação com ID " + idLocacao + " não encontrada.");
+                }
+
+                break;
+            }
+        }
+    }
+
+    if (!clienteEncontrado) {
+        System.out.println("Cliente com CPF " + cpfLocador + " não encontrado.");
+    }
+}
+
+public void listarTodasAsLocacoes() throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    List<Map<String, Object>> listaClientesMap = (List<Map<String, Object>>) dadosMap.get("clientes");
+
+    if (listaClientesMap != null) {
+        System.out.println("Lista de locações de todos os usuários:");
+
+        for (Map<String, Object> clienteMap : listaClientesMap) {
+            if (clienteMap.containsKey("locacoes")) {
+                List<Map<String, Object>> locacoesMap = (List<Map<String, Object>>) clienteMap.get("locacoes");
+
+                if (locacoesMap != null && !locacoesMap.isEmpty()) {
+                    System.out.println(
+                            "Cliente: " + clienteMap.get("nome") + " (CPF: " + clienteMap.get("cpf") + ")");
+
+                    for (Map<String, Object> locacaoMap : locacoesMap) {
+                        Locacao locacao = new ObjectMapper().convertValue(locacaoMap, Locacao.class);
+
+                        System.out.println("  Locação ID: " + locacao.getIdLocacao());
+                        System.out.println("    Data de Locação: " + locacao.getDataLoc());
+                        System.out.println("    Data de Devolução: " + locacao.getDataDevolucao());
+                        System.out.println("    Quilometragem: " + locacao.getQuilometragem());
+                        System.out.println("    Valor da Locação: " + locacao.getValorLoc());
+                        System.out.println("    Devolvido: " + locacao.isDevolvido());
+                        System.out.println("    Entregue: " + locacao.isEntregue());
+                        System.out.println("    Aprovado: " + locacao.isAprovado());
+                    }
+                    System.out.println();
+                }
+            }
+        }
+    } else {
+        System.out.println("Nenhum cliente encontrado.");
+    }
+}
+
+public void verLocacao(int cpfLocador, int idLocacao) throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    List<Map<String, Object>> listaClientesMap = (List<Map<String, Object>>) dadosMap.get("clientes");
+
+    if (listaClientesMap != null) {
+        for (Map<String, Object> clienteMap : listaClientesMap) {
+            if (clienteMap.containsKey("cpf")) {
+                int cpfCliente = (int) clienteMap.get("cpf");
+
+                if (cpfCliente == cpfLocador) {
+                    if (clienteMap.containsKey("locacoes")) {
+                        List<Map<String, Object>> locacoesMap = (List<Map<String, Object>>) clienteMap
+                                .get("locacoes");
+
+                        for (Map<String, Object> locacaoMap : locacoesMap) {
+                            Locacao locacao = new ObjectMapper().convertValue(locacaoMap, Locacao.class);
+
+                            if (locacao.getIdLocacao() == idLocacao) {
+
+                                System.out.println("Detalhes da locação:");
+                                System.out.println("  Locação ID: " + locacao.getIdLocacao());
+                                System.out.println("  Data de Locação: " + locacao.getDataLoc());
+                                System.out.println("  Data de Devolução: " + locacao.getDataDevolucao());
+                                System.out.println("  Quilometragem: " + locacao.getQuilometragem());
+                                System.out.println("  Valor da Locação: " + locacao.getValorLoc());
+                                System.out.println("  Devolvido: " + locacao.isDevolvido());
+                                System.out.println("  Entregue: " + locacao.isEntregue());
+                                System.out.println("  Aprovado: " + locacao.isAprovado());
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println("Locação com ID " + idLocacao + " não encontrada para o cliente com CPF " + cpfLocador);
+    } else {
+        System.out.println("Nenhum cliente encontrado.");
+    }
+}
+
+public void cadastrarCarro(Carro novoCarro) throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    List<Map<String, Object>> listaCarrosMap;
+    if (dadosMap.containsKey("carros")) {
+        listaCarrosMap = (List<Map<String, Object>>) dadosMap.get("carros");
+    } else {
+        listaCarrosMap = new ArrayList<>();
+        dadosMap.put("carros", listaCarrosMap);
+    }
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    Map<String, Object> novoCarroMap = objectMapper.convertValue(novoCarro, Map.class);
+
+    listaCarrosMap.add(novoCarroMap);
+
+    String jsonAtualizado = objectMapper.writeValueAsString(dadosMap);
+
+    Files.writeString(caminhoArquivo, jsonAtualizado);
+
+    System.out.println("Carro cadastrado com sucesso.");
+}
+
+public void removerCarroPorPlaca(String placa) throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    if (dadosMap.containsKey("carros")) {
+        List<Map<String, Object>> listaCarrosMap = (List<Map<String, Object>>) dadosMap.get("carros");
+
+        boolean carroEncontrado = false;
+
+        for (int i = 0; i < listaCarrosMap.size(); i++) {
+            Map<String, Object> carroMap = listaCarrosMap.get(i);
+
+            String placaCarro = (String) carroMap.get("placa");
+            if (placaCarro != null && placaCarro.equals(placa)) {
+                listaCarrosMap.remove(i);
+                carroEncontrado = true;
+                break;
+            }
+        }
+
+        if (carroEncontrado) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonAtualizado = objectMapper.writeValueAsString(dadosMap);
+            Files.writeString(caminhoArquivo, jsonAtualizado);
+
+            System.out.println("Carro com placa " + placa + " excluído com sucesso.");
+        } else {
+            System.out.println("Nenhum carro com a placa " + placa + " encontrado.");
+        }
+    } else {
+        System.out.println("Nenhum carro cadastrado.");
+    }
+}
+
+public void editarCarroPorPlaca(String placa, Carro carroEditado) throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    if (dadosMap.containsKey("carros")) {
+        List<Map<String, Object>> listaCarrosMap = (List<Map<String, Object>>) dadosMap.get("carros");
+
+        boolean carroEncontrado = false;
+
+        for (int i = 0; i < listaCarrosMap.size(); i++) {
+            Map<String, Object> carroMap = listaCarrosMap.get(i);
+
+            String placaCarro = (String) carroMap.get("placa");
+            if (placaCarro != null && placaCarro.equals(placa)) {
+                carroMap.put("placa", carroEditado.getPlaca());
+                carroMap.put("cor", carroEditado.getCor());
+                carroMap.put("numPortas", carroEditado.getNumPortas());
+                carroMap.put("quilometragem", carroEditado.getQuilometragem());
+                carroMap.put("chassi", carroEditado.getChassi());
+                carroMap.put("valorLoc", carroEditado.getValorLoc());
+                carroMap.put("modelo", carroEditado.getModelo());
+                carroMap.put("disponivel", carroEditado.isDisponivel());
+
+                carroEncontrado = true;
+                break;
+            }
+        }
+
+        if (carroEncontrado) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonAtualizado = objectMapper.writeValueAsString(dadosMap);
+            Files.writeString(caminhoArquivo, jsonAtualizado);
+
+            System.out.println("Carro com placa " + placa + " editado com sucesso.");
+        } else {
+            System.out.println("Nenhum carro com a placa " + placa + " encontrado.");
+        }
+    } else {
+        System.out.println("Nenhum carro cadastrado.");
+    }
+}
+
+public void listarCarros() throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    if (dadosMap.containsKey("carros")) {
+        List<Map<String, Object>> listaCarrosMap = (List<Map<String, Object>>) dadosMap.get("carros");
+
+        if (listaCarrosMap != null && !listaCarrosMap.isEmpty()) {
+            System.out.println("Carros cadastrados:");
+            for (Map<String, Object> carroMap : listaCarrosMap) {
+                System.out.println("Placa: " + carroMap.get("placa"));
+                System.out.println("Cor: " + carroMap.get("cor"));
+                System.out.println("Número de portas: " + carroMap.get("numPortas"));
+                System.out.println("Quilometragem: " + carroMap.get("quilometragem"));
+                System.out.println("Chassi: " + carroMap.get("chassi"));
+                System.out.println("Valor de locação: " + carroMap.get("valorLoc"));
+                System.out.println("Modelo: " + carroMap.get("modelo"));
+                System.out.println("Disponível: " + carroMap.get("disponivel"));
+                System.out.println();
+            }
+        } else {
+            System.out.println("Nenhum carro cadastrado.");
+        }
+    } else {
+        System.out.println("Nenhum carro cadastrado.");
+    }
+}
+
+public void editarDisponibilidadeCarro(String placa, boolean novoDisponivel) throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    List<Map<String, Object>> listaCarrosMap = (List<Map<String, Object>>) dadosMap.get("carros");
+
+    if (listaCarrosMap != null) {
+        boolean carroEncontrado = false;
+
+        for (Map<String, Object> carroMap : listaCarrosMap) {
+            if (carroMap.containsKey("placa")) {
+                String placaCarro = (String) carroMap.get("placa");
+
+                if (placaCarro.equals(placa)) {
+                    carroEncontrado = true;
+
+                    carroMap.put("disponivel", novoDisponivel);
+
+                    break;
+                }
+            }
+        }
+
+        if (carroEncontrado) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonAtualizado = objectMapper.writeValueAsString(dadosMap);
+            Files.writeString(caminhoArquivo, jsonAtualizado);
+
+            System.out.println("Disponibilidade do carro com placa " + placa + " foi atualizada com sucesso.");
+        } else {
+            System.out.println("Carro com placa " + placa + " não encontrado.");
+        }
+    } else {
+        System.out.println("Nenhum carro encontrado.");
+    }
+}
+
+public void verCarroPorPlaca(String placa) throws IOException {
+    Path caminhoArquivo = Paths.get("dados.json");
+
+    Map<String, Object> dadosMap = lerDados(caminhoArquivo);
+
+    List<Map<String, Object>> listaCarrosMap = (List<Map<String, Object>>) dadosMap.get("carros");
+
+    if (listaCarrosMap != null) {
+        for (Map<String, Object> carroMap : listaCarrosMap) {
+            if (carroMap.containsKey("placa")) {
+                String placaCarro = (String) carroMap.get("placa");
+
+                if (placaCarro.equals(placa)) {
+                    System.out.println("Carro encontrado:");
+                    System.out.println("Placa: " + carroMap.get("placa"));
+                    System.out.println("Cor: " + carroMap.get("cor"));
+                    System.out.println("Número de portas: " + carroMap.get("numPortas"));
+                    System.out.println("Quilometragem: " + carroMap.get("quilometragem"));
+                    System.out.println("Chassi: " + carroMap.get("chassi"));
+                    System.out.println("Valor da locação: " + carroMap.get("valorLoc"));
+                    System.out.println("Modelo: " + carroMap.get("modelo"));
+                    System.out.println("Disponível: " + carroMap.get("disponivel"));
+                    return;
+                }
+            }
+        }
+
+        System.out.println("Carro com placa " + placa + " não encontrado.");
+    } else {
+        System.out.println("Nenhum carro encontrado.");
+    }
+}
+
+
+}
