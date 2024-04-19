@@ -2,9 +2,12 @@ package com.example;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
+
+import org.xml.sax.Locator;
 
 public class Locacao {
-    
+
     private Date dataLoc;
     private Date dataDevolucao;
     private int quilometragem;
@@ -12,8 +15,15 @@ public class Locacao {
     private boolean devolvido;
     private boolean entregue;
     private boolean aprovado;
+    private int cpfLocador;
+    private int idLocacao;
 
-    public Locacao(Date dataLoc, Date dataDevolucao, int quilometragem, double valorLoc) {
+    public Locacao() {
+
+    }
+
+    public Locacao(Date dataLoc, Date dataDevolucao, int quilometragem, double valorLoc, int cpfLocador,
+            int idLocacao) {
         this.dataLoc = dataLoc;
         this.dataDevolucao = dataDevolucao;
         this.quilometragem = quilometragem;
@@ -21,11 +31,29 @@ public class Locacao {
         this.devolvido = false;
         this.entregue = false;
         this.aprovado = false;
+        this.cpfLocador = cpfLocador;
+        this.idLocacao = idLocacao;
     }
 
-    public void registrarLoc(List<Locacao> listaLocacoes, Locacao novaLocacao) {
-        listaLocacoes.add(novaLocacao);
-        System.out.println("Locação registrada com sucesso!");
+    public static Locacao registrarLoc(Scanner sc) {
+
+        Locacao locacao = new Locacao();
+        System.out.println("Digite os novos dados do usuário:");
+        System.out.print("Quilometragem: ");
+        locacao.setQuilometragem(sc.nextInt());
+        System.out.print("valor da locação: ");
+        locacao.setValorLoc(sc.nextDouble());
+        System.out.print("cpf do locador: ");
+        locacao.setCpfLocador(sc.nextInt());
+        System.out.print("id da locação: ");
+        locacao.setIdLocacao(sc.nextInt());
+        locacao.setAprovado(false);
+        locacao.setDevolvido(false);
+        locacao.setDevolvido(false);
+        locacao.setDataLoc(new Date());
+        locacao.setDataDevolucao(null);
+
+        return locacao;
     }
 
     public void editarLoc(Date novaDataLoc, Date novaDataDevolucao, int novaQuilometragem, double novoValorLoc) {
@@ -38,6 +66,18 @@ public class Locacao {
     public void removerLoc(List<Locacao> listaLocacoes, Locacao locacao) {
         listaLocacoes.remove(locacao);
         System.out.println("Locação removida com sucesso!");
+    }
+
+    public void setCpfLocador(int cpfLocador) {
+        this.cpfLocador = cpfLocador;
+    }
+
+    public int getIdLocacao() {
+        return idLocacao;
+    }
+
+    public void setIdLocacao(int idLocacao) {
+        this.idLocacao = idLocacao;
     }
 
     public void listarLoc(List<Locacao> listaLocacoes) {
@@ -80,6 +120,10 @@ public class Locacao {
 
     public void setDataLoc(Date dataLoc) {
         this.dataLoc = dataLoc;
+    }
+
+    public int getCpfLocador() {
+        return this.cpfLocador;
     }
 
     public Date getDataDevolucao() {

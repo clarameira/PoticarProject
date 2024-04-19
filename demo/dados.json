@@ -1,0 +1,87 @@
+{
+    "clientes": [
+        {
+            "nome": "Maria",
+            "endereco": "Pau dos Ferros",
+            "numero": 5,
+            "bairro": "Centro",
+            "telefone": "8499648895",
+            "locacoes": [
+                {
+                    "dataLoc": 1713481466943,
+                    "dataDevolucao": 1713481466943,
+                    "quilometragem": 100,
+                    "valorLoc": 10000.0,
+                    "devolvido": false,
+                    "entregue": false,
+                    "aprovado": false,
+                    "cpfLocador": 12312313,
+                    "idLocacao": 1
+                },
+                {
+                    "dataLoc": 1713481477655,
+                    "dataDevolucao": 1713481477655,
+                    "quilometragem": 100,
+                    "valorLoc": 10000.0,
+                    "devolvido": false,
+                    "entregue": false,
+                    "aprovado": false,
+                    "cpfLocador": 12312313,
+                    "idLocacao": 1
+                }
+            ],
+            "cpf": 12312313
+        },
+        {
+            "nome": "Maria",
+            "endereco": "Pau dos Ferros",
+            "numero": 5,
+            "bairro": "Centro",
+            "telefone": "8499648895",
+            "locacoes": [
+                {
+                    "dataLoc": 1713481612691,
+                    "dataDevolucao": 1713481612691,
+                    "quilometragem": 100,
+                    "valorLoc": 10000.0,
+                    "devolvido": false,
+                    "entregue": false,
+                    "aprovado": false,
+                    "cpfLocador": 123123,
+                    "idLocacao": 1
+                }
+            ],
+            "cpf": 123123
+        },
+        {
+            "nome": "Maria",
+            "endereco": "Pau dos Ferros",
+            "numero": 5,
+            "bairro": "Centro",
+            "telefone": "8499648895",
+            "locacoes": [],
+            "cpf": 12312313
+        },
+        {
+            "nome": "Clara",
+            "endereco": "rua",
+            "numero": 5,
+            "bairro": "bairro",
+            "telefone": "9999",
+            "locacoes": [],
+            "cpf": 12781
+        }
+    ],
+    "carros": [
+        {
+            "placa": "QS240G2",
+            "cor": "Branco",
+            "numPortas": 4,
+            "quilometragem": 100000,
+            "chassi": "11111111",
+            "valorLoc": 200.0,
+            "modelo": "Onix",
+            "disponivel": false
+        }
+    ]
+}

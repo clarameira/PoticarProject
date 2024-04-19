@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 public class Carro {
-    
+
     private String placa;
     private String cor;
     private int numPortas;
@@ -15,7 +15,12 @@ public class Carro {
     private String modelo;
     private boolean disponivel;
 
-    public Carro(String placa, String cor, int numPortas, int quilometragem, String chassi, double valorLoc, String modelo) {
+    public Carro() {
+
+    }
+
+    public Carro(String placa, String cor, int numPortas, int quilometragem, String chassi, double valorLoc,
+            String modelo) {
         this.placa = placa;
         this.cor = cor;
         this.numPortas = numPortas;
@@ -23,7 +28,7 @@ public class Carro {
         this.chassi = chassi;
         this.valorLoc = valorLoc;
         this.modelo = modelo;
-        this.disponivel = true; 
+        this.disponivel = true;
     }
 
     public void visuCar() {
@@ -93,7 +98,7 @@ public class Carro {
         this.modelo = modelo;
     }
 
-    public static void cadastrarCar(Scanner sc, List<Carro> carros) {
+    public static Carro cadastrarCar(Scanner sc) {
         System.out.println(" Cadastro de Carro ");
         System.out.print("Placa: ");
         String placa = sc.next();
@@ -111,35 +116,27 @@ public class Carro {
         String modelo = sc.next();
 
         Carro novoCarro = new Carro(placa, cor, numPortas, quilometragem, chassi, valorLoc, modelo);
-        carros.add(novoCarro);
-        System.out.println("Carro cadastrado com sucesso!");
+        return novoCarro;
     }
 
-    public static void editarCar(Scanner sc, List<Carro> carros) {
+    public static Carro editarCar(Scanner sc) {
         System.out.println(" Edição de Carro ");
-        System.out.print("Digite a placa do carro que deseja editar: ");
-        String placa = sc.next();
+        Carro carro = new Carro();
 
-        for (Carro carro : carros) {
-            if (carro.getPlaca().equals(placa)) {
-                System.out.println("Digite os novos dados do carro:");
-                System.out.print("Cor: ");
-                carro.setCor(sc.next());
-                System.out.print("Número de Portas: ");
-                carro.setNumPortas(sc.nextInt());
-                System.out.print("Quilometragem: ");
-                carro.setQuilometragem(sc.nextInt());
-                System.out.print("Chassi: ");
-                carro.setChassi(sc.next());
-                System.out.print("Valor de Locação: ");
-                carro.setValorLoc(sc.nextDouble());
-                System.out.print("Modelo: ");
-                carro.setModelo(sc.next());
-                System.out.println("Carro editado com sucesso!");
-                return;
-            }
-        }
-        System.out.println("Carro não encontrado.");
+        System.out.println("Digite os novos dados do carro:");
+        System.out.print("Cor: ");
+        carro.setCor(sc.next());
+        System.out.print("Número de Portas: ");
+        carro.setNumPortas(sc.nextInt());
+        System.out.print("Quilometragem: ");
+        carro.setQuilometragem(sc.nextInt());
+        System.out.print("Chassi: ");
+        carro.setChassi(sc.next());
+        System.out.print("Valor de Locação: ");
+        carro.setValorLoc(sc.nextDouble());
+        System.out.print("Modelo: ");
+        carro.setModelo(sc.next());
+        return carro;
     }
 
     public static void removerCar(Scanner sc, List<Carro> carros) {

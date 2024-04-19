@@ -12,7 +12,12 @@ public class Usuario {
     private String bairro;
     private String telefone;
     private int Numero;
-    
+    private List<Locacao> locacoes;
+
+    Usuario() {
+
+    }
+
     public Usuario(String nome, int CPF, String endereco, int numero, String bairro, String telefone) {
         this.nome = nome;
         this.CPF = CPF;
@@ -43,7 +48,7 @@ public class Usuario {
     }
 
     public void setEndereco(String endereco) {
-       this.endereco = endereco;
+        this.endereco = endereco;
     }
 
     public int getNumero() {
@@ -58,6 +63,14 @@ public class Usuario {
         return bairro;
     }
 
+    public List<Locacao> getLocacoes() {
+        return locacoes;
+    }
+
+    public void setLocacoes(List<Locacao> locacoes) {
+        this.locacoes = locacoes;
+    }
+
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
@@ -70,7 +83,7 @@ public class Usuario {
         this.telefone = telefone;
     }
 
-    public static void cadastrarUsu(Scanner sc, List<Usuario> usuarios) {
+    public static Usuario cadastrarUsu(Scanner sc) {
         System.out.println(" Cadastro de Usuário ");
         System.out.print("Nome: ");
         String nome = sc.next();
@@ -84,10 +97,8 @@ public class Usuario {
         String bairro = sc.next();
         System.out.print("Telefone: ");
         String telefone = sc.next();
-
         Usuario novoUsuario = new Usuario(nome, cpf, endereco, numero, bairro, telefone);
-        usuarios.add(novoUsuario);
-        System.out.println("Usuário cadastrado com sucesso!");
+        return novoUsuario;
     }
 
     public static void removerUsu(Scanner sc, List<Usuario> usuarios) {
@@ -107,32 +118,27 @@ public class Usuario {
         System.out.println("Usuário não encontrado.");
     }
 
-    public static void editarUsu(Scanner sc, List<Usuario> usuarios) {
+    public static Usuario editarUsu(Scanner sc) {
         System.out.println(" Edição de Usuário ");
-        System.out.print("Digite o CPF do usuário que deseja editar: ");
-        int cpf = sc.nextInt();
 
-        for (Usuario usuario : usuarios) {
-            if (usuario.getCPF() == cpf) {
-                System.out.println("Digite os novos dados do usuário:");
-                System.out.print("Nome: ");
-                usuario.setNome(sc.next());
-                System.out.print("Endereço: ");
-                usuario.setEndereco(sc.next());
-                System.out.print("Número: ");
-                usuario.setNumero(sc.nextInt());
-                System.out.print("Bairro: ");
-                usuario.setBairro(sc.next());
-                System.out.print("Telefone: ");
-                usuario.setTelefone(sc.next());
-                System.out.println("Usuário editado com sucesso!");
-                return;
-            }
-        }
-        System.out.println("Usuário não encontrado.");
+        Usuario cliente = new Usuario();
+        System.out.println("Digite os novos dados do usuário:");
+        System.out.print("Nome: ");
+        cliente.setNome(sc.next());
+        System.out.print("Endereço: ");
+        cliente.setEndereco(sc.next());
+        System.out.print("Número: ");
+        cliente.setNumero(sc.nextInt());
+        System.out.print("Bairro: ");
+        cliente.setBairro(sc.next());
+        System.out.print("Telefone: ");
+        cliente.setTelefone(sc.next());
+        System.out.println("Usuário editado com sucesso!");
+
+        return cliente;
     }
 
-    public void visuUsu(){
+    public void visuUsu() {
         System.out.println("Nome: " + nome);
         System.out.println("CPF: " + CPF);
         System.out.println("Endereco: " + endereco);
@@ -157,6 +163,14 @@ public class Usuario {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "\nNome: " + getNome() + "\nCPF:" + getCPF() + "\nEndereço:" + getEndereco()
+                + "\nNumero:" + getNumero() + "\nBairro:" + getBairro()
+                + "\nTelefone:" + getTelefone();
+    }
+
 }
 
 
