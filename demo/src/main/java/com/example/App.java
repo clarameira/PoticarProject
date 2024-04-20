@@ -3,7 +3,6 @@ package com.example;
 import java.io.IOException;
 import java.util.Scanner;
 
-
 public class App {
     public static void main(String[] args) {
         int cpfAux;
@@ -34,9 +33,9 @@ public class App {
                 int op2 = 1;
                 op = sc.nextInt();
 
-                switch (op){
+                switch (op) {
                     case 1:
-                        while (op2 != 4){
+                        while (op2 != 4) {
                             System.out.println("\nGERENCIAMENTO DE CLIENTES\n");
                             System.out.println("\n Selecione uma opção: \n");
                             System.out.println("1 - Cadastrar cliente");
@@ -64,7 +63,7 @@ public class App {
                                         e.printStackTrace();
                                     }
                                     break;
-                                    case 3:
+                                case 3:
                                     System.out.print("Digite o CPF do usuário que deseja visualizar: ");
                                     cpfAux = sc.nextInt();
                                     try {
@@ -90,16 +89,16 @@ public class App {
                                     }
                                     break;
                                 case 0:
-                                    System.out.println("\nRetornando para o menu principal");
+                                    System.out.println("\nRetornando para o menu principal...");
                                     break;
                                 default:
-                                    System.out.println("\nOpção inválida, tente novamente");
+                                    System.out.println("\nOpção inválida, tente novamente!");
                                     break;
                             }
-                            
+
                         }
                         break;
-                        case 2:
+                    case 2:
                         while (op2 != 0) {
                             System.out.println("\nMENU CARROS\n");
                             System.out.println("Selecione uma opção");
@@ -127,7 +126,7 @@ public class App {
                                         e.printStackTrace();
                                     }
                                     break;
-                                    case 3:
+                                case 3:
                                     System.out.print("Digite a placa do carro que deseja visualizar: ");
                                     placaAux = sc.next();
                                     try {
@@ -153,19 +152,171 @@ public class App {
                                     }
                                     break;
                                 case 0:
+                                    System.out.println("\nRetornando para o menu principal...");
+                                    break;
+                                default:
+                                    System.out.println("\nOpção inválida.");
+                                    break;
+                            }
+                        }
+                        break;
+                    case 3:
+                        while (op2 != 0) {
+                            System.out.println("\nMENU LOCAÇÕES\n");
+                            System.out.println("Selecione uma opção");
+                            System.out.println("1 - Cadastrar locação");
+                            System.out.println("2 - Ver dados de uma locação");
+                            System.out.println("3 - Excluir locação");
+                            System.out.println("4 - Listar locações");
+                            System.out.println("0 - Voltar\n");
+                            op2 = sc.nextInt();
+                            switch (op2) {
+                                case 1:
+                                    try {
+                                        controlador.cadastrarLocacao(Locacao.registrarLoc(sc));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 2:
+                                    System.out.print("Digite o ID da locação: ");
+                                    idLocacaoAux = sc.nextInt();
+                                    System.out.print("Digite o CPF do locador: ");
+                                    cpfAux = sc.nextInt();
+                                    try {
+                                        controlador.verLocacao(cpfAux, idLocacaoAux);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 3:
+                                    System.out.print("Digite o ID da locação: ");
+                                    idLocacaoAux = sc.nextInt();
+                                    System.out.print("Digite o CPF do locador: ");
+                                    cpfAux = sc.nextInt();
+                                    try {
+                                        controlador.removerLocacao(cpfAux, idLocacaoAux);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 4:
+                                    try {
+                                        controlador.listarTodasAsLocacoes();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 0:
                                     System.out.println("\nRetornando para o menu principal");
                                     break;
-                                    default:
+                                default:
                                     System.out.println("\nOpção inválida");
                                     break;
                             }
                         }
                         break;
+                    case 0:
+                        System.out.println("\nEncerrando sistema\n");
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                        break;
                 }
-            }
+            } while (op != 0);
+
+        } else {
+            System.out.println("Acesso como cliente");
+            int op = 1;
+
+            do {
+                System.out.println("\nSISTEMA DE LOCADORA\n");
+                System.out.println("Selecione uma opção");
+                System.out.println("1 - Menu cliente");
+                System.out.println("2 - Menu locação");
+                System.out.println("0 - Sair\n");
+                int op2 = 1;
+                op = sc.nextInt();
+                switch (op) {
+                    case 1:
+                        while (op2 != 0) {
+                            System.out.println("\nMENU CLIENTE\n");
+                            System.out.println("Selecione uma opção");
+                            System.out.println("1 - Cadastrar cliente");
+                            System.out.println("2 - Ver dados do cliente");
+                            System.out.println("0 - Voltar\n");
+                            op2 = sc.nextInt();
+                            switch (op2) {
+                                case 1:
+                                    try {
+                                        controlador.cadastrarCliente(Usuario.cadastrarUsu(sc));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 2:
+                                    System.out.print("Digite o CPF do usuário que deseja visualizar: ");
+                                    cpfAux = sc.nextInt();
+                                    try {
+                                        controlador.verClientePorCpf(cpfAux);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 0:
+                                    System.out.println("\nRetornando para o menu principal...");
+                                    break;
+                                default:
+                                    System.out.println("\nOpção inválida.");
+                                    break;
+                            }
+                        }
+                        break;
+                    case 2:
+                        while (op2 != 0) {
+                            System.out.println("\nMENU LOCAÇÕES\n");
+                            System.out.println("Selecione uma opção");
+                            System.out.println("1 - Cadastrar locação");
+                            System.out.println("2 - Ver dados de uma locação");
+                            System.out.println("0 - Voltar\n");
+                            op2 = sc.nextInt();
+                            switch (op2) {
+                                case 1:
+                                    try {
+                                        controlador.cadastrarLocacao(Locacao.registrarLoc(sc));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 2:
+                                    System.out.print("Digite o ID da locação: ");
+                                    idLocacaoAux = sc.nextInt();
+                                    System.out.print("Digite o CPF do locador: ");
+                                    cpfAux = sc.nextInt();
+                                    try {
+                                        controlador.verLocacao(cpfAux, idLocacaoAux);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    break;
+                                case 0:
+                                    System.out.println("\nRetornando para o menu principal...");
+                                    break;
+                                default:
+                                    System.out.println("\nOpção inválida.");
+                                    break;
+                            }
+                        }
+                        break;
+                    case 0:
+                        System.out.println("\nEncerrando sistema.\n");
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                        break;
+                }
+            } while (op != 0);
         }
+
     }
 }
-
-                        
-                
