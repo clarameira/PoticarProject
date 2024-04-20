@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import org.xml.sax.Locator;
-
 public class Locacao {
 
     private Date dataLoc;
