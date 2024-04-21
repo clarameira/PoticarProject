@@ -11,7 +11,6 @@ public class Usuario {
     private int numero;
     private String bairro;
     private String telefone;
-    private int Numero;
     private List<Locacao> locacoes;
 
     Usuario() {
@@ -142,7 +141,7 @@ public class Usuario {
         System.out.println("Nome: " + nome);
         System.out.println("CPF: " + CPF);
         System.out.println("Endereco: " + endereco);
-        System.out.println("Numero: " + Numero);
+        System.out.println("Numero: " + numero);
         System.out.println("Bairro: " + bairro);
         System.out.println("Telefone: " + telefone);
     }
