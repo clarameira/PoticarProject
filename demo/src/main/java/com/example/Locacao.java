@@ -36,7 +36,7 @@ public class Locacao {
     public static Locacao registrarLoc(Scanner sc) {
 
         Locacao locacao = new Locacao();
-        System.out.println("Digite os novos dados do usuário:");
+        System.out.println("Digite os dados para a locação:");
         System.out.print("Quilometragem: ");
         locacao.setQuilometragem(sc.nextInt());
         System.out.print("valor da locação: ");

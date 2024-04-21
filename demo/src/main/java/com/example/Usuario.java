@@ -85,15 +85,15 @@ public class Usuario {
     public static Usuario cadastrarUsu(Scanner sc) {
         System.out.println(" Cadastro de Usuário ");
         System.out.print("Nome: ");
-        String nome = sc.nextLine();
+        String nome = sc.next();
         System.out.print("CPF: ");
         int cpf = sc.nextInt();
         System.out.print("Endereço: ");
-        String endereco = sc.nextLine();
+        String endereco = sc.next();
         System.out.print("Número: ");
         int numero = sc.nextInt();
         System.out.print("Bairro: ");
-        String bairro = sc.nextLine();
+        String bairro = sc.next();
         System.out.print("Telefone: ");
         String telefone = sc.next();
         Usuario novoUsuario = new Usuario(nome, cpf, endereco, numero, bairro, telefone);
@@ -123,13 +123,13 @@ public class Usuario {
         Usuario cliente = new Usuario();
         System.out.println("Digite os novos dados do usuário:");
         System.out.print("Nome: ");
-        cliente.setNome(sc.nextLine());
+        cliente.setNome(sc.next());
         System.out.print("Endereço: ");
-        cliente.setEndereco(sc.nextLine());
+        cliente.setEndereco(sc.next());
         System.out.print("Número: ");
         cliente.setNumero(sc.nextInt());
         System.out.print("Bairro: ");
-        cliente.setBairro(sc.nextLine());
+        cliente.setBairro(sc.next());
         System.out.print("Telefone: ");
         cliente.setTelefone(sc.next());
         System.out.println("Usuário editado com sucesso!");
